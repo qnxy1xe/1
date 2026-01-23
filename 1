@@ -1,6 +1,6 @@
---// Venyx UI Library (FIXED DROPDOWN VERSION)
+--// Venyx UI Library (FIXED DROPDOWN + KEYBIND)
 --// Original by Stefanuk12
---// Patched to restore Dropdown:onChanged()
+--// Patched to restore Dropdown:onChanged() and addKeybind()
 
 local Library = {}
 Library.__index = Library
@@ -49,7 +49,6 @@ function Library.new(title, icon)
         BackgroundColor3 = Theme.Background,
         BorderSizePixel = 0
     })
-
     Create("UICorner",{CornerRadius = UDim.new(0,10), Parent = Main})
 
     -- Drag
@@ -119,10 +118,7 @@ function Library.new(title, icon)
             BackgroundTransparency = 1
         })
 
-        local Layout = Create("UIListLayout", {
-            Parent = Container,
-            Padding = UDim.new(0,8)
-        })
+        local Layout = Create("UIListLayout", {Parent = Container, Padding = UDim.new(0,8)})
 
         Button.MouseButton1Click:Connect(function()
             for _,p in pairs(self.Pages) do p.Container.Visible = false end
@@ -211,7 +207,7 @@ function Library.new(title, icon)
                 end)
             end
 
-            -- DROPDOWN (FIXED)
+            -- DROPDOWN
             function Section:addDropdown(text,options)
                 local Dropdown = {}
                 Dropdown.Value = options[1]
@@ -243,6 +239,29 @@ function Library.new(title, icon)
                 end
 
                 return Dropdown
+            end
+
+            -- KEYBIND
+            function Section:addKeybind(text, defaultKey, callback)
+                local key = defaultKey or Enum.KeyCode.Unknown
+                local B = Create("TextButton",{
+                    Parent=Frame,
+                    Size=UDim2.new(1,-10,0,30),
+                    Position=UDim2.new(0,5,0,35),
+                    BackgroundColor3=Theme.Accent,
+                    Text=text.." : "..tostring(key),
+                    TextColor3=Theme.TextColor,
+                    Font=Enum.Font.Gotham,
+                    TextSize=13,
+                    BorderSizePixel=0
+                })
+                Create("UICorner",{CornerRadius=UDim.new(0,6),Parent=B})
+
+                UserInputService.InputBegan:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == key then
+                        callback()
+                    end
+                end)
             end
 
             return Section
