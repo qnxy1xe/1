@@ -2078,10 +2078,19 @@ do
 		end
 		
 		percent = math.clamp(percent, 0, 1)
-		value = value or (min + (max - min) * percent)
-		value = math.floor(value * 10) / 10
 		
-		slider.TextBox.Text = string.format("%.1f", value)
+		-- 1. Calculate the value without forcing it to a whole number yet
+		value = value or (min + (max - min) * percent)
+		
+		-- 2. Logic: If max is 1 or less, round to 0.1. Otherwise, round to 1.
+		if max <= 1 then
+			value = math.floor(value * 10) / 10
+		else
+			value = math.floor(value)
+		end
+		
+		-- 3. Display: Only show decimal if it's not a whole number (fixes 16.0 issue)
+		slider.TextBox.Text = (value % 1 == 0) and tostring(math.floor(value)) or tostring(value)
 		utility:Tween(bar.Fill, {Size = UDim2.new(percent, 0, 1, 0)}, 0.1)
 		
 		if value ~= lvalue and slider.ImageTransparency == 0 then
