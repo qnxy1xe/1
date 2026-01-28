@@ -155,39 +155,46 @@ do
 		return key
 	end
 	
-function utility:DraggingEnabled(frame, parent)
-    parent = parent or frame
-    local dragging = false
-    local dragInput, mousePos, framePos
+	function utility:DraggingEnabled(frame, parent)
+	
+		parent = parent or frame
+		
+		-- stolen from wally or kiriot, kek
+		local dragging = false
+		local dragInput, mousePos, framePos
 
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            mousePos = input.Position
-            framePos = parent.Position
-            
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
+		frame.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				mousePos = input.Position
+				framePos = parent.Position
+				
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragging = false
+					end
+				end)
+			end
+		end)
 
-    frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement then
-            dragInput = input
-        end
-    end)
+		frame.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement then
+				dragInput = input
+			end
+		end)
 
-    -- Use UserInputService for the smoothest movement
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            local delta = input.Position - mousePos
-            parent.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
-        end
-    end)
-end
+		input.InputChanged:Connect(function(input)
+			if input == dragInput and dragging then
+				local delta = input.Position - mousePos
+				parent.Position  = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+			end
+		end)
+
+	end
+	
+	function utility:DraggingEnded(callback)
+		table.insert(self.ended, callback)
+	end
 	
 end
 
@@ -261,8 +268,7 @@ do
 					Name = "TopBar",
 					BackgroundTransparency = 1,
 					ClipsDescendants = true,
-					Size = UDim2.new(1, 0, 0, 0),
-					Visible = false,
+					Size = UDim2.new(1, 0, 0, 38),
 					ZIndex = 5,
 					Image = "rbxassetid://4595286933",
 					ImageColor3 = themes.Accent,
@@ -271,10 +277,12 @@ do
 				}, {
 					utility:Create("TextLabel", { -- title
 						Name = "Title",
+						Transparency = 1,
 						AnchorPoint = Vector2.new(0, 0.5),
 						BackgroundTransparency = 1,
 						Position = UDim2.new(0, 12, 0, 19),
 						Size = UDim2.new(1, -46, 0, 16),
+						Visible = false,
 						ZIndex = 5,
 						Font = Enum.Font.GothamBold,
 						Text = title,
