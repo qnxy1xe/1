@@ -210,87 +210,165 @@ do
 	section.__index = section
 	
 	-- new classes
-	
+
+
 function library.new(title)
-		local container = utility:Create("ScreenGui", {
-			Name = title,
-			Parent = game.CoreGui
-		}, {
-			utility:Create("ImageLabel", {
-				Name = "Main",
-				BackgroundTransparency = 1,
-				Position = UDim2.new(0.25, 0, 0.052435593, 0),
-				Size = UDim2.new(0, 700, 0, 428), -- Set to 700 width
-				Image = "rbxassetid://4641149554",
-				ImageColor3 = themes.Background,
-				ScaleType = Enum.ScaleType.Slice,
-				SliceCenter = Rect.new(4, 4, 700, 428) -- MATCHED TO SIZE TO FIX EDGES
-			}, {
-				utility:Create("ImageLabel", {
-					Name = "Glow",
-					BackgroundTransparency = 1,
-					Position = UDim2.new(0, -15, 0, -15),
-					Size = UDim2.new(1, 30, 1, 30),
-					ZIndex = 0,
-					Image = "rbxassetid://5028857084",
-					ImageColor3 = themes.Glow,
-					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(24, 24, 276, 276)
-				}),
-				utility:Create("ImageLabel", {
-					Name = "Pages",
-					BackgroundTransparency = 1,
-					ClipsDescendants = true,
-					Position = UDim2.new(0, 0, 0, 0), -- Moved to 0 to remove TopBar gap
-					Size = UDim2.new(0, 126, 1, 0),    -- Adjusted height
-					ZIndex = 3,
-					Image = "rbxassetid://5012534273",
-					ImageColor3 = themes.DarkContrast,
-					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(4, 4, 126, 428) -- FIXED EDGES
-				}, {
-					utility:Create("ScrollingFrame", {
-						Name = "Pages_Container",
-						Active = true,
-						BackgroundTransparency = 1,
-						Position = UDim2.new(0, 0, 0, 10),
-						Size = UDim2.new(1, 0, 1, -20),
-						CanvasSize = UDim2.new(0, 0, 0, 314),
-						ScrollBarThickness = 0
-					}, {
-						utility:Create("UIListLayout", {
-							SortOrder = Enum.SortOrder.LayoutOrder,
-							Padding = UDim.new(0, 10)
-						})
-					})
-				}),
-				utility:Create("ImageLabel", {
-					Name = "TopBar",
-					BackgroundTransparency = 1,
-					ImageTransparency = 1, -- MAKES THE TOPBAR COLOR INVISIBLE
-					ClipsDescendants = false,
-					Size = UDim2.new(1, 0, 0, 38), -- Keep height so you can still drag it
-					ZIndex = 5,
-					Image = "rbxassetid://4595286933",
-					ImageColor3 = themes.Accent,
-					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(4, 4, 700, 38) -- FIXED EDGES
-				}, {
-					utility:Create("TextLabel", { -- title
-						Name = "Title",
-						Transparency = 1,
-						AnchorPoint = Vector2.new(0, 0.5),
-						BackgroundTransparency = 1,
-						Position = UDim2.new(0, 12, 0, 19),
-						Size = UDim2.new(1, -46, 0, 16),
-						Visible = false, -- TITLE HIDDEN
-						ZIndex = 5,
-						Font = Enum.Font.GothamBold,
-						Text = title,
-						TextColor3 = themes.TextColor,
-						TextSize = 14,
-						TextXAlignment = Enum.TextXAlignment.Left
-					})
+
+local container = utility:Create("ScreenGui", {
+
+Name = title,
+
+Parent = game.CoreGui
+
+}, {
+
+utility:Create("ImageLabel", {
+
+Name = "Main",
+
+BackgroundTransparency = 1,
+
+Position = UDim2.new(0.25, 0, 0.052435593, 0),
+
+Size = UDim2.new(0, 511, 0, 428),
+
+Image = "rbxassetid://4641149554",
+
+ImageColor3 = themes.Background,
+
+ScaleType = Enum.ScaleType.Slice,
+
+SliceCenter = Rect.new(4, 4, 700, 296)
+
+}, {
+
+utility:Create("ImageLabel", {
+
+Name = "Glow",
+
+BackgroundTransparency = 1,
+
+Position = UDim2.new(0, -15, 0, -15),
+
+Size = UDim2.new(1, 30, 1, 30),
+
+ZIndex = 0,
+
+Image = "rbxassetid://5028857084",
+
+ImageColor3 = themes.Glow,
+
+ScaleType = Enum.ScaleType.Slice,
+
+SliceCenter = Rect.new(24, 24, 276, 276)
+
+}),
+
+utility:Create("ImageLabel", {
+
+Name = "Pages",
+
+BackgroundTransparency = 1,
+
+ClipsDescendants = true,
+
+Position = UDim2.new(0, 0, 0, 38),
+
+Size = UDim2.new(0, 126, 1, -38),
+
+ZIndex = 3,
+
+Image = "rbxassetid://5012534273",
+
+ImageColor3 = themes.DarkContrast,
+
+ScaleType = Enum.ScaleType.Slice,
+
+SliceCenter = Rect.new(4, 4, 450, 296)
+
+}, {
+
+utility:Create("ScrollingFrame", {
+
+Name = "Pages_Container",
+
+Active = true,
+
+BackgroundTransparency = 1,
+
+Position = UDim2.new(0, 0, 0, 10),
+
+Size = UDim2.new(1, 0, 1, -20),
+
+CanvasSize = UDim2.new(0, 0, 0, 314),
+
+ScrollBarThickness = 0
+
+}, {
+
+utility:Create("UIListLayout", {
+
+SortOrder = Enum.SortOrder.LayoutOrder,
+
+Padding = UDim.new(0, 10)
+
+})
+
+})
+
+}),
+
+utility:Create("ImageLabel", {
+
+Name = "TopBar",
+
+BackgroundTransparency = 1,
+
+ClipsDescendants = true,
+
+Size = UDim2.new(1, 0, 0, 38),
+
+ZIndex = 5,
+
+Image = "rbxassetid://4595286933",
+
+ImageColor3 = themes.Accent,
+
+ScaleType = Enum.ScaleType.Slice,
+
+SliceCenter = Rect.new(4, 4, 450, 296)
+
+}, {
+
+utility:Create("TextLabel", { -- title
+
+Name = "Title",
+
+Transparency = 1,
+
+AnchorPoint = Vector2.new(0, 0.5),
+
+BackgroundTransparency = 1,
+
+Position = UDim2.new(0, 12, 0, 19),
+
+Size = UDim2.new(1, -46, 0, 16),
+
+Visible = false,
+
+ZIndex = 5,
+
+Font = Enum.Font.GothamBold,
+
+Text = title,
+
+TextColor3 = themes.TextColor,
+
+TextSize = 14,
+
+TextXAlignment = Enum.TextXAlignment.Left
+
+})
 				})
 			})
 		})
