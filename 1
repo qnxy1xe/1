@@ -2078,9 +2078,10 @@ do
 		end
 		
 		percent = math.clamp(percent, 0, 1)
-		value = value or math.floor(min + (max - min) * percent)
+		value = value or (min + (max - min) * percent)
+		value = math.floor(value * 10) / 10
 		
-		slider.TextBox.Text = value
+		slider.TextBox.Text = string.format("%.1f", value)
 		utility:Tween(bar.Fill, {Size = UDim2.new(percent, 0, 1, 0)}, 0.1)
 		
 		if value ~= lvalue and slider.ImageTransparency == 0 then
