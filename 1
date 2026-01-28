@@ -467,7 +467,8 @@ do
 		self.toggling = true
 		
 		local container = self.container.Main
-		local topbar = container.TopBar
+		local topbar = container.TopBar 
+		TopBar.Visible = false
 		
 		if self.position then
 			utility:Tween(container, {
