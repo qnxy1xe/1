@@ -224,7 +224,7 @@ do
 				Image = "rbxassetid://4641149554",
 				ImageColor3 = themes.Background,
 				ScaleType = Enum.ScaleType.Slice,
-				SliceCenter = Rect.new(4, 4, 390, 296)
+				SliceCenter = Rect.new(4, 4, 450, 296)
 			}, {
 				utility:Create("ImageLabel", {
 					Name = "Glow",
@@ -247,7 +247,7 @@ do
 					Image = "rbxassetid://5012534273",
 					ImageColor3 = themes.DarkContrast,
 					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(4, 4, 296, 296)
+					SliceCenter = Rect.new(4, 4, 450, 296)
 				}, {
 					utility:Create("ScrollingFrame", {
 						Name = "Pages_Container",
@@ -273,7 +273,7 @@ do
 					Image = "rbxassetid://4595286933",
 					ImageColor3 = themes.Accent,
 					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(4, 4, 296, 296)
+					SliceCenter = Rect.new(4, 4, 450, 296)
 				}, {
 					utility:Create("TextLabel", { -- title
 						Name = "Title",
@@ -380,7 +380,7 @@ do
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.LightContrast,
 			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(4, 4, 296, 296),
+			SliceCenter = Rect.new(4, 4, 450, 296),
 			ClipsDescendants = true
 		}, {
 			utility:Create("Frame", {
@@ -468,7 +468,6 @@ do
 		
 		local container = self.container.Main
 		local topbar = container.TopBar 
-		TopBar.Visible = false
 		
 		if self.position then
 			utility:Tween(container, {
@@ -517,7 +516,7 @@ do
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.Background,
 			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(4, 4, 296, 296),
+			SliceCenter = Rect.new(4, 4, 450, 296),
 			ZIndex = 3,
 			ClipsDescendants = true
 		}, {
