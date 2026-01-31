@@ -1686,7 +1686,7 @@ do
 			Name = "Dropdown",
 			Parent = self.container,
 			BackgroundTransparency = 1,
-			Size = UDim2.new(1, 0, 0, 37),
+			Size = UDim2.new(1, 0, 0, 45),
 			ClipsDescendants = true
 		}, {
 			utility:Create("UIListLayout", {
@@ -1697,7 +1697,7 @@ do
 				Name = "Search",
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
-				Size = UDim2.new(1, 0, 0, 30),
+				Size = UDim2.new(1, 0, 0, 37),
 				ZIndex = 2,
 				Image = "rbxassetid://5028857472",
 				ImageColor3 = themes.DarkContrast,
@@ -2122,7 +2122,7 @@ do
 				Parent = dropdown.List.Frame,
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
-				Size = UDim2.new(1, 0, 0, 35),
+				Size = UDim2.new(1, 0, 0, 38),
 				ZIndex = 2,
 				Image = "rbxassetid://5028857472",
 				ImageColor3 = themes.DarkContrast,
@@ -2158,18 +2158,18 @@ do
 		
 		local frame = dropdown.List.Frame
 		
-		utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, (entries == 0 and 30) or math.clamp(entries, 0, 3) * 34 + 38)}, 0.3)
+		utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, (entries == 0 and 37) or math.clamp(entries, 0, 3) * 38 + 45)}, 0.3)
 		utility:Tween(dropdown.Search.Button, {Rotation = list and 180 or 0}, 0.3)
 		
 		if entries > 3 then
 		
 			for i, button in pairs(dropdown.List.Frame:GetChildren()) do
 				if button:IsA("ImageButton") then
-					button.Size = UDim2.new(1, -6, 0, 30)
+					button.Size = UDim2.new(1, -6, 0, 36)
 				end
 			end
 			
-			frame.CanvasSize = UDim2.new(0, 0, 0, (entries * 34) - 4)
+			frame.CanvasSize = UDim2.new(0, 0, 0, (entries * 38) - 4)
 			frame.ScrollBarImageTransparency = 0
 		else
 			frame.CanvasSize = UDim2.new(0, 0, 0, 0)
