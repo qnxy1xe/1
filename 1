@@ -666,13 +666,16 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 35),
+			Size = UDim2.new(1, 0, 0, 38),
 			ZIndex = 2,
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.DarkContrast,
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(2, 2, 298, 298)
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				BackgroundTransparency = 1,
@@ -726,18 +729,21 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 35),
+			Size = UDim2.new(1, 0, 0, 37),
 			ZIndex = 2,
 			Image = "rbxassetid://3570695787",
 			ImageColor3 = themes.DarkContrast,
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(100, 100, 298, 298)
 		},{
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 10, 0.5, 1),
+				Position = UDim2.new(0, 10, 0.5, 0),
 				Size = UDim2.new(0.5, 0, 1, 0),
 				ZIndex = 3,
 				Font = Enum.Font.Gotham,
@@ -751,9 +757,6 @@ do
 				Name = "Button",
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
-				utility:Create("UICorner", {
-  			  CornerRadius = Enum.CornerSize.new(1, 0) -- This makes it a perfect circle
-				})
 				Position = UDim2.new(1, -50, 0.5, -8),
 				Size = UDim2.new(0, 40, 0, 16),
 				ZIndex = 2,
@@ -762,6 +765,9 @@ do
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 8)
+				}),
 				utility:Create("ImageLabel", {
 					Name = "Frame",
 					BackgroundTransparency = 1,
@@ -772,6 +778,10 @@ do
 					ImageColor3 = themes.TextColor,
 					ScaleType = Enum.ScaleType.Slice,
 					SliceCenter = Rect.new(2, 2, 298, 298)
+				}, {
+					utility:Create("UICorner", {
+						CornerRadius = UDim.new(0, 6)
+					})
 				})
 			})
 		})
@@ -802,18 +812,21 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 30),
+			Size = UDim2.new(1, 0, 0, 38),
 			ZIndex = 2,
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.DarkContrast,
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(2, 2, 298, 298)
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 10, 0.5, 1),
+				Position = UDim2.new(0, 10, 0.5, 0),
 				Size = UDim2.new(0.5, 0, 1, 0),
 				ZIndex = 3,
 				Font = Enum.Font.Gotham,
@@ -834,6 +847,9 @@ do
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 4)
+				}),
 				utility:Create("TextBox", {
 					Name = "Textbox", 
 					BackgroundTransparency = 1,
@@ -910,18 +926,21 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 35),
+			Size = UDim2.new(1, 0, 0, 38),
 			ZIndex = 2,
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.DarkContrast,
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(2, 2, 298, 298)
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 10, 0.5, 1),
+				Position = UDim2.new(0, 10, 0.5, 0),
 				Size = UDim2.new(1, 0, 1, 0),
 				ZIndex = 3,
 				Font = Enum.Font.Gotham,
@@ -942,6 +961,9 @@ do
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 4)
+				}),
 				utility:Create("TextLabel", {
 					Name = "Text",
 					BackgroundTransparency = 1,
@@ -1015,18 +1037,21 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 30),
+			Size = UDim2.new(1, 0, 0, 38),
 			ZIndex = 2,
 			Image = "rbxassetid://5028857472",
 			ImageColor3 = themes.DarkContrast,
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(2, 2, 298, 298)
 		},{
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 10, 0.5, 1),
+				Position = UDim2.new(0, 10, 0.5, 0),
 				Size = UDim2.new(0.5, 0, 1, 0),
 				ZIndex = 3,
 				Font = Enum.Font.Gotham,
@@ -1047,6 +1072,10 @@ do
 				ImageColor3 = Color3.fromRGB(255, 255, 255),
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
+			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 3)
+				})
 			})
 		})
 		
@@ -1547,6 +1576,9 @@ do
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(2, 2, 298, 298)
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("TextLabel", {
 				Name = "Title",
 				BackgroundTransparency = 1,
@@ -1689,7 +1721,7 @@ do
 			Name = "Dropdown",
 			Parent = self.container,
 			BackgroundTransparency = 1,
-			Size = UDim2.new(1, 0, 0, 30),
+			Size = UDim2.new(1, 0, 0, 37),
 			ClipsDescendants = true
 		}, {
 			utility:Create("UIListLayout", {
@@ -1700,19 +1732,22 @@ do
 				Name = "Search",
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
-				Size = UDim2.new(1, 0, 0, 30),
+				Size = UDim2.new(1, 0, 0, 37),
 				ZIndex = 2,
 				Image = "rbxassetid://5028857472",
 				ImageColor3 = themes.DarkContrast,
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 4)
+				}),
 				utility:Create("TextBox", {
 					Name = "TextBox",
 					AnchorPoint = Vector2.new(0, 0.5),
 					BackgroundTransparency = 1,
 					TextTruncate = Enum.TextTruncate.AtEnd,
-					Position = UDim2.new(0, 10, 0.5, 1),
+					Position = UDim2.new(0, 10, 0.5, 0),
 					Size = UDim2.new(1, -42, 1, 0),
 					ZIndex = 3,
 					Font = Enum.Font.Gotham,
@@ -1738,13 +1773,16 @@ do
 				Name = "List",
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
-				Size = UDim2.new(1, 0, 1, -34),
+				Size = UDim2.new(1, 0, 1, -41),
 				ZIndex = 2,
 				Image = "rbxassetid://5028857472",
 				ImageColor3 = themes.Background,
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 4)
+				}),
 				utility:Create("ScrollingFrame", {
 					Name = "Frame",
 					Active = true,
@@ -2132,6 +2170,9 @@ do
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 3)
+				}),
 				utility:Create("TextLabel", {
 					BackgroundTransparency = 1,
 					Position = UDim2.new(0, 10, 0, 0),
@@ -2161,18 +2202,18 @@ do
 		
 		local frame = dropdown.List.Frame
 		
-		utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, (entries == 0 and 30) or math.clamp(entries, 0, 3) * 34 + 38)}, 0.3)
+		utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, (entries == 0 and 37) or math.clamp(entries, 0, 3) * 39 + 41)}, 0.3)
 		utility:Tween(dropdown.Search.Button, {Rotation = list and 180 or 0}, 0.3)
 		
 		if entries > 3 then
 		
 			for i, button in pairs(dropdown.List.Frame:GetChildren()) do
 				if button:IsA("ImageButton") then
-					button.Size = UDim2.new(1, -6, 0, 30)
+					button.Size = UDim2.new(1, -6, 0, 35)
 				end
 			end
 			
-			frame.CanvasSize = UDim2.new(0, 0, 0, (entries * 34) - 4)
+			frame.CanvasSize = UDim2.new(0, 0, 0, (entries * 39) - 4)
 			frame.ScrollBarImageTransparency = 0
 		else
 			frame.CanvasSize = UDim2.new(0, 0, 0, 0)
