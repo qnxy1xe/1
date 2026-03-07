@@ -1,0 +1,197 @@
+-- [[ SINISTER LUNA OVERHAUL ]]
+-- Credits: Modified for weighted physics and glass transparency
+
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+-- services
+local input = game:GetService("UserInputService")
+local run = game:GetService("RunService")
+local tween = game:GetService("TweenService")
+local tweeninfo = TweenInfo.new
+
+-- additional
+local utility = {}
+
+-- themes (Sinister Dark & Glass)
+local objects = {}
+local themes = {
+	Background = Color3.fromRGB(0, 0, 0), -- Pure Sinister Black
+	Glow = Color3.fromRGB(0, 0, 0), 
+	Accent = Color3.fromRGB(20, 20, 20), 
+	LightContrast = Color3.fromRGB(15, 15, 15), 
+	DarkContrast = Color3.fromRGB(10, 10, 10),  
+	TextColor = Color3.fromRGB(255, 255, 255),
+	Transparency = 0.55 -- Glassmorphism setting
+}
+
+do
+	function utility:Create(instance, properties, children)
+		local object = Instance.new(instance)
+		for i, v in pairs(properties or {}) do
+			object[i] = v
+		end
+		for i, module in pairs(children or {}) do
+			module.Parent = object
+		end
+		return object
+	end
+
+	-- LUNA-STYLE LERP DRAGGING (Smoothness Everywhere)
+	function utility:DraggingEnabled(frame, parent)
+		parent = parent or frame
+		local dragging = false
+		local dragInput, mousePos, framePos
+		local lerpSpeed = 0.15 -- The "Weighted" feel
+
+		frame.InputBegan:Connect(function(inputObj)
+			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				mousePos = inputObj.Position
+				framePos = parent.Position
+				
+				inputObj.Changed:Connect(function()
+					if inputObj.UserInputState == Enum.UserInputState.End then
+						dragging = false
+					end
+				end)
+			end
+		end)
+
+		frame.InputChanged:Connect(function(inputObj)
+			if inputObj.UserInputType == Enum.UserInputType.MouseMovement then
+				dragInput = inputObj
+			end
+		end)
+
+		run.RenderStepped:Connect(function()
+			if dragging and dragInput then
+				local delta = dragInput.Position - mousePos
+				local targetPos = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+				-- Linear Interpolation for that smooth follow
+				parent.Position = parent.Position:Lerp(targetPos, lerpSpeed)
+			end
+		end)
+	end
+    
+    function utility:Tween(instance, properties, duration, style)
+		tween:Create(instance, tweeninfo(duration, style or Enum.EasingStyle.Quart, Enum.EasingDirection.Out), properties):Play()
+	end
+end
+
+-- classes
+local library = {}
+local page = {}
+
+do
+	library.__index = library
+	page.__index = page
+	
+	function library.new(title)
+		local container = utility:Create("ScreenGui", {
+			Name = title,
+			Parent = game.CoreGui,
+			IgnoreGuiInset = true
+		}, {
+			utility:Create("ImageLabel", {
+				Name = "Main",
+				BackgroundTransparency = 1,
+				Position = UDim2.new(0.5, -272, 0.5, -214),
+				Size = UDim2.new(0, 545, 0, 428),
+				-- LUNA ASSETS INJECTED BELOW
+				Image = "rbxassetid://4641149554", 
+				ImageColor3 = themes.Background,
+				ImageTransparency = themes.Transparency,
+				ScaleType = Enum.ScaleType.Slice,
+				SliceCenter = Rect.new(4, 4, 296, 296)
+			}, {
+				utility:Create("ImageLabel", {
+					Name = "Glow",
+					BackgroundTransparency = 1,
+					Position = UDim2.new(0, -15, 0, -15),
+					Size = UDim2.new(1, 30, 1, 30),
+					ZIndex = 0,
+					Image = "rbxassetid://5028857084", -- Luna Glow Asset
+					ImageColor3 = themes.Glow,
+					ScaleType = Enum.ScaleType.Slice,
+					SliceCenter = Rect.new(24, 24, 276, 276)
+				}),
+				utility:Create("ImageLabel", {
+					Name = "TopBar",
+					BackgroundTransparency = 1,
+					Size = UDim2.new(1, 0, 0, 38),
+					ZIndex = 5,
+					Image = "rbxassetid://4595286933", -- Luna Topbar Asset
+					ImageColor3 = themes.DarkContrast,
+                    ImageTransparency = 0.2
+				})
+			})
+		})
+        
+        -- Enable the Smooth Dragging on the TopBar
+		utility:DraggingEnabled(container.Main.TopBar, container.Main)
+		
+		return setmetatable({
+			container = container,
+			main = container.Main
+		}, library)
+	end
+
+    -- [NEW] Added Slider with Luna Smooth Animation
+	function library:AddSlider(parent, text, min, max, callback)
+		local slider = utility:Create("Frame", {
+			Parent = parent,
+			Size = UDim2.new(1, -20, 0, 40),
+			BackgroundTransparency = 1
+		}, {
+			utility:Create("TextLabel", {
+				Text = text,
+				Size = UDim2.new(1, 0, 0, 20),
+				TextColor3 = themes.TextColor,
+				BackgroundTransparency = 1,
+				Font = Enum.Font.Gotham
+			}),
+			utility:Create("Frame", {
+				Name = "Rail",
+				Position = UDim2.new(0, 0, 0, 25),
+				Size = UDim2.new(1, 0, 0, 4),
+				BackgroundColor3 = themes.DarkContrast
+			}, {
+				utility:Create("Frame", {
+					Name = "Fill",
+					Size = UDim2.new(0.5, 0, 1, 0),
+					BackgroundColor3 = themes.TextColor
+				})
+			})
+		})
+
+		local fill = slider.Rail.Fill
+		local dragging = false
+
+		local function update()
+			local percent = math.clamp((mouse.X - slider.Rail.AbsolutePosition.X) / slider.Rail.AbsoluteSize.X, 0, 1)
+			-- Smooth Fill Animation
+			utility:Tween(fill, {Size = UDim2.new(percent, 0, 1, 0)}, 0.1)
+			callback(math.floor(min + (max - min) * percent))
+		end
+
+		slider.Rail.InputBegan:Connect(function(inputObj)
+			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				update()
+			end
+		end)
+
+		input.InputEnded:Connect(function(inputObj)
+			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = false
+			end
+		end)
+
+		run.RenderStepped:Connect(function()
+			if dragging then update() end
+		end)
+	end
+end
+
+return library
