@@ -1,197 +1,171 @@
--- [[ SINISTER LUNA OVERHAUL ]]
--- Credits: Modified for weighted physics and glass transparency
+-- [[ SINISTER LUNA OVERHAUL v2.1 ]]
+-- Visuals: Sinister Glass | Physics: Weighted Lerp
+-- Includes: Pages, Sections, Buttons, Toggles, Sliders
 
 local player = game.Players.LocalPlayer
 local mouse = player:GetMouse()
-
--- services
 local input = game:GetService("UserInputService")
 local run = game:GetService("RunService")
 local tween = game:GetService("TweenService")
-local tweeninfo = TweenInfo.new
 
--- additional
 local utility = {}
-
--- themes (Sinister Dark & Glass)
-local objects = {}
 local themes = {
-	Background = Color3.fromRGB(0, 0, 0), -- Pure Sinister Black
-	Glow = Color3.fromRGB(0, 0, 0), 
-	Accent = Color3.fromRGB(20, 20, 20), 
-	LightContrast = Color3.fromRGB(15, 15, 15), 
-	DarkContrast = Color3.fromRGB(10, 10, 10),  
-	TextColor = Color3.fromRGB(255, 255, 255),
-	Transparency = 0.55 -- Glassmorphism setting
+    Background = Color3.fromRGB(0, 0, 0), 
+    Glow = Color3.fromRGB(0, 0, 0), 
+    Accent = Color3.fromRGB(255, 255, 255), 
+    LightContrast = Color3.fromRGB(20, 20, 20), 
+    DarkContrast = Color3.fromRGB(10, 10, 10),   
+    TextColor = Color3.fromRGB(255, 255, 255),
+    Transparency = 0.5
 }
 
 do
-	function utility:Create(instance, properties, children)
-		local object = Instance.new(instance)
-		for i, v in pairs(properties or {}) do
-			object[i] = v
-		end
-		for i, module in pairs(children or {}) do
-			module.Parent = object
-		end
-		return object
-	end
+    function utility:Create(instance, properties, children)
+        local object = Instance.new(instance)
+        for i, v in pairs(properties or {}) do object[i] = v end
+        for i, child in pairs(children or {}) do child.Parent = object end
+        return object
+    end
 
-	-- LUNA-STYLE LERP DRAGGING (Smoothness Everywhere)
-	function utility:DraggingEnabled(frame, parent)
-		parent = parent or frame
-		local dragging = false
-		local dragInput, mousePos, framePos
-		local lerpSpeed = 0.15 -- The "Weighted" feel
+    function utility:DraggingEnabled(frame, parent)
+        parent = parent or frame
+        local dragging, dragInput, mousePos, framePos
+        frame.InputBegan:Connect(function(i)
+            if i.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging, mousePos, framePos = true, i.Position, parent.Position
+                i.Changed:Connect(function() if i.UserInputState == Enum.UserInputState.End then dragging = false end end)
+            end
+        end)
+        frame.InputChanged:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseMovement then dragInput = i end end)
+        run.RenderStepped:Connect(function()
+            if dragging and dragInput then
+                local delta = dragInput.Position - mousePos
+                local target = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+                parent.Position = parent.Position:Lerp(target, 0.15)
+            end
+        end)
+    end
 
-		frame.InputBegan:Connect(function(inputObj)
-			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
-				mousePos = inputObj.Position
-				framePos = parent.Position
-				
-				inputObj.Changed:Connect(function()
-					if inputObj.UserInputState == Enum.UserInputState.End then
-						dragging = false
-					end
-				end)
-			end
-		end)
-
-		frame.InputChanged:Connect(function(inputObj)
-			if inputObj.UserInputType == Enum.UserInputType.MouseMovement then
-				dragInput = inputObj
-			end
-		end)
-
-		run.RenderStepped:Connect(function()
-			if dragging and dragInput then
-				local delta = dragInput.Position - mousePos
-				local targetPos = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
-				-- Linear Interpolation for that smooth follow
-				parent.Position = parent.Position:Lerp(targetPos, lerpSpeed)
-			end
-		end)
-	end
-    
-    function utility:Tween(instance, properties, duration, style)
-		tween:Create(instance, tweeninfo(duration, style or Enum.EasingStyle.Quart, Enum.EasingDirection.Out), properties):Play()
-	end
+    function utility:Tween(instance, properties, duration)
+        tween:Create(instance, TweenInfo.new(duration or 0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), properties):Play()
+    end
 end
 
--- classes
 local library = {}
 local page = {}
+local section = {}
 
-do
-	library.__index = library
-	page.__index = page
-	
-	function library.new(title)
-		local container = utility:Create("ScreenGui", {
-			Name = title,
-			Parent = game.CoreGui,
-			IgnoreGuiInset = true
-		}, {
-			utility:Create("ImageLabel", {
-				Name = "Main",
-				BackgroundTransparency = 1,
-				Position = UDim2.new(0.5, -272, 0.5, -214),
-				Size = UDim2.new(0, 545, 0, 428),
-				-- LUNA ASSETS INJECTED BELOW
-				Image = "rbxassetid://4641149554", 
-				ImageColor3 = themes.Background,
-				ImageTransparency = themes.Transparency,
-				ScaleType = Enum.ScaleType.Slice,
-				SliceCenter = Rect.new(4, 4, 296, 296)
-			}, {
-				utility:Create("ImageLabel", {
-					Name = "Glow",
-					BackgroundTransparency = 1,
-					Position = UDim2.new(0, -15, 0, -15),
-					Size = UDim2.new(1, 30, 1, 30),
-					ZIndex = 0,
-					Image = "rbxassetid://5028857084", -- Luna Glow Asset
-					ImageColor3 = themes.Glow,
-					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(24, 24, 276, 276)
-				}),
-				utility:Create("ImageLabel", {
-					Name = "TopBar",
-					BackgroundTransparency = 1,
-					Size = UDim2.new(1, 0, 0, 38),
-					ZIndex = 5,
-					Image = "rbxassetid://4595286933", -- Luna Topbar Asset
-					ImageColor3 = themes.DarkContrast,
-                    ImageTransparency = 0.2
-				})
-			})
-		})
-        
-        -- Enable the Smooth Dragging on the TopBar
-		utility:DraggingEnabled(container.Main.TopBar, container.Main)
-		
-		return setmetatable({
-			container = container,
-			main = container.Main
-		}, library)
-	end
+library.__index = library
+page.__index = page
+section.__index = section
 
-    -- [NEW] Added Slider with Luna Smooth Animation
-	function library:AddSlider(parent, text, min, max, callback)
-		local slider = utility:Create("Frame", {
-			Parent = parent,
-			Size = UDim2.new(1, -20, 0, 40),
-			BackgroundTransparency = 1
-		}, {
-			utility:Create("TextLabel", {
-				Text = text,
-				Size = UDim2.new(1, 0, 0, 20),
-				TextColor3 = themes.TextColor,
-				BackgroundTransparency = 1,
-				Font = Enum.Font.Gotham
-			}),
-			utility:Create("Frame", {
-				Name = "Rail",
-				Position = UDim2.new(0, 0, 0, 25),
-				Size = UDim2.new(1, 0, 0, 4),
-				BackgroundColor3 = themes.DarkContrast
-			}, {
-				utility:Create("Frame", {
-					Name = "Fill",
-					Size = UDim2.new(0.5, 0, 1, 0),
-					BackgroundColor3 = themes.TextColor
-				})
-			})
-		})
+function library.new(title)
+    local container = utility:Create("ScreenGui", {Name = title, Parent = game.CoreGui, IgnoreGuiInset = true})
+    local main = utility:Create("ImageLabel", {
+        Name = "Main", Parent = container, BackgroundTransparency = 1,
+        Position = UDim2.new(0.5, -272, 0.5, -214), Size = UDim2.new(0, 545, 0, 428),
+        Image = "rbxassetid://4641149554", ImageColor3 = themes.Background, ImageTransparency = themes.Transparency,
+        ScaleType = Enum.ScaleType.Slice, SliceCenter = Rect.new(4, 4, 296, 296)
+    }, {
+        utility:Create("ImageLabel", {
+            Name = "Glow", BackgroundTransparency = 1, Position = UDim2.new(0, -15, 0, -15), Size = UDim2.new(1, 30, 1, 30),
+            ZIndex = 0, Image = "rbxassetid://5028857084", ImageColor3 = themes.Glow, ScaleType = Enum.ScaleType.Slice, SliceCenter = Rect.new(24, 24, 276, 276)
+        }),
+        utility:Create("Frame", {Name = "TopBar", Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = themes.DarkContrast, BackgroundTransparency = 0.2, BorderSizePixel = 0})
+    })
 
-		local fill = slider.Rail.Fill
-		local dragging = false
+    utility:DraggingEnabled(main.TopBar, main)
 
-		local function update()
-			local percent = math.clamp((mouse.X - slider.Rail.AbsolutePosition.X) / slider.Rail.AbsoluteSize.X, 0, 1)
-			-- Smooth Fill Animation
-			utility:Tween(fill, {Size = UDim2.new(percent, 0, 1, 0)}, 0.1)
-			callback(math.floor(min + (max - min) * percent))
-		end
+    local pageContainer = utility:Create("Frame", {Name = "Pages", Parent = main, Position = UDim2.new(0, 10, 0, 45), Size = UDim2.new(1, -20, 1, -55), BackgroundTransparency = 1})
 
-		slider.Rail.InputBegan:Connect(function(inputObj)
-			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
-				update()
-			end
-		end)
+    return setmetatable({container = container, main = main, pageContainer = pageContainer, pages = {}}, library)
+end
 
-		input.InputEnded:Connect(function(inputObj)
-			if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = false
-			end
-		end)
+function library:addPage(name)
+    local newPage = utility:Create("ScrollingFrame", {
+        Name = name, Parent = self.pageContainer, Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1, ScrollBarThickness = 2, Visible = (#self.pageContainer:GetChildren() == 0)
+    }, {
+        utility:Create("UIListLayout", {SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 10)})
+    })
 
-		run.RenderStepped:Connect(function()
-			if dragging then update() end
-		end)
-	end
+    local pageObj = setmetatable({frame = newPage}, page)
+    table.insert(self.pages, pageObj)
+    return pageObj
+end
+
+-- PAGE METHODS (Adding Sections)
+function page:addSection(name)
+    local secFrame = utility:Create("Frame", {
+        Name = name, Parent = self.frame, Size = UDim2.new(1, 0, 0, 30),
+        BackgroundColor3 = themes.LightContrast, BackgroundTransparency = 0.8
+    }, {
+        utility:Create("UICorner", {CornerRadius = UDim.new(0, 4)}),
+        utility:Create("TextLabel", {
+            Text = name:upper(), Size = UDim2.new(1, -10, 0, 20), Position = UDim2.new(0, 10, 0, 2),
+            TextColor3 = themes.TextColor, Font = Enum.Font.GothamBold, TextSize = 12, BackgroundTransparency = 1, TextXAlignment = Enum.TextXAlignment.Left
+        }),
+        utility:Create("UIListLayout", {SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 5)})
+    })
+
+    local secObj = setmetatable({frame = secFrame}, section)
+    return secObj
+end
+
+-- SECTION METHODS (Buttons, Toggles, Sliders)
+function section:addButton(text, callback)
+    local btn = utility:Create("TextButton", {
+        Parent = self.frame, Text = "  " .. text, Size = UDim2.new(1, -10, 0, 30),
+        BackgroundColor3 = themes.DarkContrast, TextColor3 = themes.TextColor,
+        Font = Enum.Font.Gotham, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left, AutoButtonColor = true
+    }, { utility:Create("UICorner", {CornerRadius = UDim.new(0, 4)}) })
+    
+    btn.MouseButton1Click:Connect(callback)
+end
+
+function section:addToggle(text, default, callback)
+    local enabled = default or false
+    local toggle = utility:Create("TextButton", {
+        Parent = self.frame, Text = "  " .. text, Size = UDim2.new(1, -10, 0, 30),
+        BackgroundColor3 = themes.DarkContrast, TextColor3 = themes.TextColor,
+        Font = Enum.Font.Gotham, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left
+    }, {
+        utility:Create("UICorner", {CornerRadius = UDim.new(0, 4)}),
+        utility:Create("Frame", {
+            Name = "Status", Position = UDim2.new(1, -25, 0.5, -7), Size = UDim2.new(0, 15, 0, 15),
+            BackgroundColor3 = enabled and themes.Accent or themes.LightContrast
+        }, { utility:Create("UICorner", {CornerRadius = UDim.new(1, 0)}) })
+    })
+
+    toggle.MouseButton1Click:Connect(function()
+        enabled = not enabled
+        utility:Tween(toggle.Status, {BackgroundColor3 = enabled and themes.Accent or themes.LightContrast}, 0.2)
+        callback(enabled)
+    end)
+end
+
+function section:addSlider(text, min, max, default, callback)
+    local slider = utility:Create("Frame", {
+        Parent = self.frame, Size = UDim2.new(1, -10, 0, 45), BackgroundTransparency = 1
+    }, {
+        utility:Create("TextLabel", {Text = "  " .. text, Size = UDim2.new(1, 0, 0, 20), TextColor3 = themes.TextColor, Font = Enum.Font.Gotham, BackgroundTransparency = 1, TextXAlignment = Enum.TextXAlignment.Left}),
+        utility:Create("Frame", {Name = "Rail", Position = UDim2.new(0, 10, 0, 30), Size = UDim2.new(1, -20, 0, 4), BackgroundColor3 = themes.DarkContrast}, {
+            utility:Create("Frame", {Name = "Fill", Size = UDim2.new((default-min)/(max-min), 0, 1, 0), BackgroundColor3 = themes.Accent})
+        })
+    })
+
+    local fill = slider.Rail.Fill
+    local dragging = false
+
+    local function update()
+        local percent = math.clamp((mouse.X - slider.Rail.AbsolutePosition.X) / slider.Rail.AbsoluteSize.X, 0, 1)
+        utility:Tween(fill, {Size = UDim2.new(percent, 0, 1, 0)}, 0.1)
+        callback(math.floor(min + (max - min) * percent))
+    end
+
+    slider.Rail.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true update() end end)
+    input.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end end)
+    run.RenderStepped:Connect(function() if dragging then update() end end)
 end
 
 return library
