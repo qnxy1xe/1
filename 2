@@ -1,14 +1,16 @@
--- Luna Styled UI Library - Fixed
--- Black/dark grey with grey dividers
+-- Luna Styled UI Library - Complete Redesign
+-- Dark grey glassmorphic with working dropdowns
 
 local player = game.Players.LocalPlayer
 local mouse = player:GetMouse()
 
+-- services
 local input = game:GetService("UserInputService")
 local run = game:GetService("RunService")
 local tween = game:GetService("TweenService")
 local tweeninfo = TweenInfo.new
 
+-- utility
 local utility = {}
 
 function utility:Create(instance, properties, children)
@@ -60,6 +62,7 @@ function utility:DraggingEnabled(frame, parent)
 	end)
 end
 
+-- Classes
 local library = {}
 local page = {}
 local section = {}
@@ -76,16 +79,17 @@ function library.new(title)
 	}, {
 		utility:Create("Frame", {
 			Name = "Main",
-			BackgroundColor3 = Color3.fromRGB(20, 20, 25),
-			BackgroundTransparency = 0,
-			BorderSizePixel = 0,
+			BackgroundColor3 = Color3.fromRGB(15, 15, 20),
+			BackgroundTransparency = 0.1,
+			BorderSizePixel = 1,
+			BorderColor3 = Color3.fromRGB(50, 50, 60),
 			Position = UDim2.new(0.25, 0, 0.05, 0),
 			Size = UDim2.new(0, 545, 0, 428)
 		}, {
 			utility:Create("Frame", {
 				Name = "Pages",
 				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-				BackgroundTransparency = 0,
+				BackgroundTransparency = 0.15,
 				BorderSizePixel = 0,
 				Position = UDim2.new(0, 0, 0, 38),
 				Size = UDim2.new(0, 126, 1, -38),
@@ -105,20 +109,13 @@ function library.new(title)
 						SortOrder = Enum.SortOrder.LayoutOrder,
 						Padding = UDim.new(0, 8)
 					})
-				}),
-				utility:Create("Frame", {
-					Name = "Divider",
-					BackgroundColor3 = Color3.fromRGB(80, 80, 90),
-					BorderSizePixel = 0,
-					Position = UDim2.new(1, -2, 0, 0),
-					Size = UDim2.new(0, 2, 1, 0)
 				})
 			}),
 			utility:Create("ScrollingFrame", {
 				Name = "ContentFrame",
 				Active = true,
-				BackgroundColor3 = Color3.fromRGB(20, 20, 25),
-				BackgroundTransparency = 0,
+				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
+				BackgroundTransparency = 0.15,
 				BorderSizePixel = 0,
 				Position = UDim2.new(0, 134, 0, 46),
 				Size = UDim2.new(1, -142, 1, -56),
@@ -129,14 +126,15 @@ function library.new(title)
 			}, {
 				utility:Create("UIListLayout", {
 					SortOrder = Enum.SortOrder.LayoutOrder,
-					Padding = UDim.new(0, 10)
+					Padding = UDim.new(0, 8)
 				})
 			}),
 			utility:Create("Frame", {
 				Name = "TopBar",
 				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-				BackgroundTransparency = 0,
-				BorderSizePixel = 0,
+				BackgroundTransparency = 0.1,
+				BorderSizePixel = 1,
+				BorderColor3 = Color3.fromRGB(50, 50, 60),
 				Size = UDim2.new(1, 0, 0, 38)
 			}, {
 				utility:Create("TextLabel", {
@@ -150,13 +148,6 @@ function library.new(title)
 					TextColor3 = Color3.fromRGB(220, 220, 230),
 					TextSize = 14,
 					TextXAlignment = Enum.TextXAlignment.Left
-				}),
-				utility:Create("Frame", {
-					Name = "BottomDivider",
-					BackgroundColor3 = Color3.fromRGB(80, 80, 90),
-					BorderSizePixel = 0,
-					Position = UDim2.new(0, 0, 1, -2),
-					Size = UDim2.new(1, 0, 0, 2)
 				})
 			})
 		})
@@ -180,7 +171,7 @@ function library:addPage(title, icon)
 		Name = title,
 		Parent = self.pagesContainer,
 		BackgroundColor3 = Color3.fromRGB(30, 30, 40),
-		BackgroundTransparency = 0.5,
+		BackgroundTransparency = 0.2,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, -8, 0, 32),
 		AutoButtonColor = false,
@@ -200,6 +191,9 @@ function library:addPage(title, icon)
 			TextSize = 11,
 			TextTransparency = 0.4,
 			TextXAlignment = Enum.TextXAlignment.Left
+		}),
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
 		})
 	})
 	
@@ -226,12 +220,12 @@ function page:addSection(title)
 			Parent = self.library.contentFrame,
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, -10, 1, 0),
+			Size = UDim2.new(1, -16, 1, 0),
 			ClipsDescendants = true
 		}, {
 			utility:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 10)
+				Padding = UDim.new(0, 8)
 			})
 		})
 	end
@@ -240,16 +234,19 @@ function page:addSection(title)
 		Name = title,
 		Parent = self.contentContainer,
 		BackgroundColor3 = Color3.fromRGB(25, 25, 35),
-		BackgroundTransparency = 0.3,
+		BackgroundTransparency = 0.2,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 28)
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 8)
+		}),
 		utility:Create("Frame", {
 			Name = "Container",
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Position = UDim2.new(0, 8, 0, 8),
-			Size = UDim2.new(1, -16, 1, -16)
+			Position = UDim2.new(0, 12, 0, 8),
+			Size = UDim2.new(1, -24, 1, -16)
 		}, {
 			utility:Create("TextLabel", {
 				Name = "Title",
@@ -283,14 +280,18 @@ function section:addButton(title, callback)
 		Name = "Button",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 38),
+		Size = UDim2.new(1, 0, 0, 32),
 		Font = Enum.Font.Gotham,
 		Text = title,
 		TextColor3 = Color3.fromRGB(200, 200, 210),
 		TextSize = 11,
 		AutoButtonColor = false
+	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		})
 	})
 	
 	table.insert(self.modules, button)
@@ -311,16 +312,16 @@ function section:addToggle(title, default, callback)
 		Name = "Toggle",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 37)
+		Size = UDim2.new(1, 0, 0, 32)
 	}, {
 		utility:Create("TextLabel", {
 			Name = "Title",
 			AnchorPoint = Vector2.new(0, 0.5),
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0.5, 0),
-			Size = UDim2.new(0.5, 0, 1, 0),
+			Position = UDim2.new(0, 12, 0.5, 0),
+			Size = UDim2.new(0, 150, 1, 0),
 			Font = Enum.Font.Gotham,
 			Text = title,
 			TextColor3 = Color3.fromRGB(200, 200, 210),
@@ -338,12 +339,19 @@ function section:addToggle(title, default, callback)
 			Font = Enum.Font.Gotham,
 			Text = ""
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 9)
+			}),
 			utility:Create("Frame", {
 				Name = "Dot",
 				BackgroundColor3 = Color3.fromRGB(200, 200, 210),
 				BorderSizePixel = 0,
 				Position = UDim2.new(0, 2, 0.5, -8),
 				Size = UDim2.new(0, 16, 0, 16)
+			}, {
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 8)
+				})
 			})
 		})
 	})
@@ -373,19 +381,22 @@ function section:addTextbox(title, default, callback)
 		Name = "Textbox",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 38),
+		Size = UDim2.new(1, 0, 0, 32),
 		AutoButtonColor = false,
 		Font = Enum.Font.Gotham,
 		Text = ""
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		}),
 		utility:Create("TextLabel", {
 			Name = "Title",
 			AnchorPoint = Vector2.new(0, 0.5),
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0.5, 0),
-			Size = UDim2.new(0.5, 0, 1, 0),
+			Position = UDim2.new(0, 12, 0.5, 0),
+			Size = UDim2.new(0, 150, 1, 0),
 			Font = Enum.Font.Gotham,
 			Text = title,
 			TextColor3 = Color3.fromRGB(200, 200, 210),
@@ -397,12 +408,16 @@ function section:addTextbox(title, default, callback)
 			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
 			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
-			Position = UDim2.new(1, -100, 0.5, -8),
-			Size = UDim2.new(0, 90, 0, 16),
-			Font = Enum.Font.GothamSemibold,
+			Position = UDim2.new(1, -90, 0.5, -8),
+			Size = UDim2.new(0, 80, 0, 16),
+			Font = Enum.Font.Gotham,
 			Text = default or "",
 			TextColor3 = Color3.fromRGB(200, 200, 210),
 			TextSize = 11
+		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			})
 		})
 	})
 	
@@ -426,17 +441,20 @@ function section:addSlider(title, default, min, max, callback)
 		Name = "Slider",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 50),
+		Size = UDim2.new(1, 0, 0, 42),
 		AutoButtonColor = false,
 		Font = Enum.Font.Gotham,
 		Text = ""
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		}),
 		utility:Create("TextLabel", {
 			Name = "Title",
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0, 6),
+			Position = UDim2.new(0, 12, 0, 4),
 			Size = UDim2.new(0.5, 0, 0, 16),
 			Font = Enum.Font.Gotham,
 			Text = title,
@@ -445,38 +463,41 @@ function section:addSlider(title, default, min, max, callback)
 			TextXAlignment = Enum.TextXAlignment.Left
 		}),
 		utility:Create("TextBox", {
-			Name = "TextBox",
-			BackgroundTransparency = 1,
+			Name = "Value",
+			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
-			Position = UDim2.new(1, -30, 0, 6),
-			Size = UDim2.new(0, 20, 0, 16),
-			Font = Enum.Font.GothamSemibold,
+			Position = UDim2.new(1, -50, 0, 4),
+			Size = UDim2.new(0, 40, 0, 16),
+			Font = Enum.Font.Gotham,
 			Text = tostring(default or min),
 			TextColor3 = Color3.fromRGB(200, 200, 210),
-			TextSize = 11,
-			TextXAlignment = Enum.TextXAlignment.Right
+			TextSize = 10,
+			TextXAlignment = Enum.TextXAlignment.Center
+		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			})
 		}),
 		utility:Create("Frame", {
-			Name = "Slider",
-			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0, 28),
-			Size = UDim2.new(1, -20, 0, 16),
-			Text = ""
+			Name = "SliderBar",
+			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+			BackgroundTransparency = 0.4,
+			BorderSizePixel = 0,
+			Position = UDim2.new(0, 12, 0, 26),
+			Size = UDim2.new(1, -24, 0, 8)
 		}, {
+			utility:Create("UICorner", {
+				CornerRadius = UDim.new(0, 4)
+			}),
 			utility:Create("Frame", {
-				Name = "Bar",
-				AnchorPoint = Vector2.new(0, 0.5),
-				BackgroundColor3 = Color3.fromRGB(60, 60, 80),
-				BackgroundTransparency = 0.3,
+				Name = "Fill",
+				BackgroundColor3 = Color3.fromRGB(120, 150, 200),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0.5, 0),
-				Size = UDim2.new(1, 0, 0, 4)
+				Size = UDim2.new(0.5, 0, 1, 0)
 			}, {
-				utility:Create("Frame", {
-					Name = "Fill",
-					BackgroundColor3 = Color3.fromRGB(120, 150, 200),
-					BorderSizePixel = 0,
-					Size = UDim2.new(0.5, 0, 1, 0)
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 4)
 				})
 			})
 		})
@@ -484,9 +505,9 @@ function section:addSlider(title, default, min, max, callback)
 	
 	table.insert(self.modules, slider)
 	
-	local bar = slider.Slider.Bar
-	local fill = bar.Fill
-	local value = slider.TextBox
+	local sliderBar = slider.SliderBar
+	local fill = sliderBar.Fill
+	local value = slider.Value
 	
 	local sliderCallback = function(val)
 		if callback then
@@ -499,8 +520,8 @@ function section:addSlider(title, default, min, max, callback)
 	slider.MouseButton1Down:Connect(function()
 		local dragging = true
 		while dragging do
-			local relativeX = mouse.X - bar.AbsolutePosition.X
-			local percent = math.clamp(relativeX / bar.AbsoluteSize.X, 0, 1)
+			local relativeX = mouse.X - sliderBar.AbsolutePosition.X
+			local percent = math.clamp(relativeX / sliderBar.AbsoluteSize.X, 0, 1)
 			local val = math.floor(min + (max - min) * percent)
 			
 			value.Text = tostring(val)
@@ -511,8 +532,8 @@ function section:addSlider(title, default, min, max, callback)
 		end
 	end)
 	
-	input.InputEnded:Connect(function(inputObj)
-		if inputObj.UserInputType == Enum.UserInputType.MouseButton1 then
+	input.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			dragging = false
 		end
 	end)
@@ -525,18 +546,21 @@ function section:addKeybind(title, default, callback, changedCallback)
 		Name = "Keybind",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 38),
+		Size = UDim2.new(1, 0, 0, 32),
 		AutoButtonColor = false,
 		Font = Enum.Font.Gotham,
 		Text = ""
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		}),
 		utility:Create("TextLabel", {
 			Name = "Title",
 			AnchorPoint = Vector2.new(0, 0.5),
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0.5, 0),
+			Position = UDim2.new(0, 12, 0.5, 0),
 			Size = UDim2.new(1, 0, 1, 0),
 			Font = Enum.Font.Gotham,
 			Text = title,
@@ -582,18 +606,21 @@ function section:addColorPicker(title, default, callback)
 		Name = "ColorPicker",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 38),
+		Size = UDim2.new(1, 0, 0, 32),
 		AutoButtonColor = false,
 		Font = Enum.Font.Gotham,
 		Text = ""
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		}),
 		utility:Create("TextLabel", {
 			Name = "Title",
 			AnchorPoint = Vector2.new(0, 0.5),
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0.5, 0),
+			Position = UDim2.new(0, 12, 0.5, 0),
 			Size = UDim2.new(0.5, 0, 1, 0),
 			Font = Enum.Font.Gotham,
 			Text = title,
@@ -624,39 +651,50 @@ function section:addDropdown(title, list, callback)
 		Name = "Dropdown",
 		Parent = self.container,
 		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
-		BackgroundTransparency = 0.4,
+		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 38),
+		Size = UDim2.new(1, 0, 0, 32),
 		ClipsDescendants = false
 	}, {
+		utility:Create("UICorner", {
+			CornerRadius = UDim.new(0, 6)
+		}),
 		utility:Create("TextButton", {
 			Name = "Button",
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 38),
+			Size = UDim2.new(1, 0, 0, 32),
 			Font = Enum.Font.Gotham,
 			Text = title,
 			TextColor3 = Color3.fromRGB(200, 200, 210),
 			TextSize = 11,
 			AutoButtonColor = false
 		}),
-		utility:Create("ScrollingFrame", {
+		utility:Create("Frame", {
 			Name = "List",
-			Active = true,
 			BackgroundColor3 = Color3.fromRGB(25, 25, 35),
-			BackgroundTransparency = 0.3,
+			BackgroundTransparency = 0.2,
 			BorderSizePixel = 0,
-			Position = UDim2.new(0, 0, 0, 38),
+			Position = UDim2.new(0, 0, 0, 32),
 			Size = UDim2.new(1, 0, 0, 0),
-			CanvasSize = UDim2.new(0, 0, 0, 0),
-			ScrollBarThickness = 2,
-			ScrollBarImageColor3 = Color3.fromRGB(100, 100, 120),
-			Visible = false,
-			ClipsDescendants = true
+			ClipsDescendants = true,
+			Visible = false
 		}, {
-			utility:Create("UIListLayout", {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 2)
+			utility:Create("ScrollingFrame", {
+				Name = "Scroll",
+				Active = true,
+				BackgroundTransparency = 1,
+				BorderSizePixel = 0,
+				Position = UDim2.new(0, 0, 0, 0),
+				Size = UDim2.new(1, 0, 1, 0),
+				CanvasSize = UDim2.new(0, 0, 0, 0),
+				ScrollBarThickness = 2,
+				ScrollBarImageColor3 = Color3.fromRGB(100, 100, 120)
+			}, {
+				utility:Create("UIListLayout", {
+					SortOrder = Enum.SortOrder.LayoutOrder,
+					Padding = UDim.new(0, 0)
+				})
 			})
 		})
 	})
@@ -665,6 +703,7 @@ function section:addDropdown(title, list, callback)
 	
 	local button = dropdown.Button
 	local listFrame = dropdown.List
+	local scrollFrame = listFrame.Scroll
 	local isOpen = false
 	
 	list = list or {}
@@ -676,7 +715,7 @@ function section:addDropdown(title, list, callback)
 			self:updateDropdown(dropdown, nil, list, callback)
 		else
 			utility:Tween(listFrame, {Size = UDim2.new(1, 0, 0, 0)}, 0.15)
-			utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 38)}, 0.15)
+			utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 32)}, 0.15)
 			wait(0.15)
 			listFrame.Visible = false
 		end
@@ -690,27 +729,28 @@ function section:updateDropdown(dropdown, title, list, callback)
 	
 	list = list or {}
 	local listFrame = dropdown.List
+	local scrollFrame = listFrame.Scroll
 	
-	for _, item in pairs(listFrame:GetChildren()) do
+	for _, item in pairs(scrollFrame:GetChildren()) do
 		if item:IsA("TextButton") then
 			item:Destroy()
 		end
 	end
 	
 	local itemCount = #list
-	local itemHeight = 32
+	local itemHeight = 28
 	
 	for i, value in ipairs(list) do
 		local item = utility:Create("TextButton", {
-			Parent = listFrame,
+			Parent = scrollFrame,
 			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
 			BackgroundTransparency = 0.3,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, -4, 0, itemHeight - 2),
+			Size = UDim2.new(1, 0, 0, itemHeight),
 			Font = Enum.Font.Gotham,
 			Text = value,
 			TextColor3 = Color3.fromRGB(200, 200, 210),
-			TextSize = 11,
+			TextSize = 10,
 			AutoButtonColor = false
 		})
 		
@@ -722,22 +762,22 @@ function section:updateDropdown(dropdown, title, list, callback)
 			end
 			
 			utility:Tween(listFrame, {Size = UDim2.new(1, 0, 0, 0)}, 0.15)
-			utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 38)}, 0.15)
+			utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 32)}, 0.15)
 			wait(0.15)
 			listFrame.Visible = false
 		end)
 	end
 	
-	listFrame.CanvasSize = UDim2.new(0, 0, 0, itemCount * itemHeight)
+	scrollFrame.CanvasSize = UDim2.new(0, 0, 0, itemCount * itemHeight)
 	listFrame.Visible = true
 	
 	local displayHeight = math.min(itemCount * itemHeight, 120)
 	utility:Tween(listFrame, {Size = UDim2.new(1, 0, 0, displayHeight)}, 0.15)
-	utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 38 + displayHeight)}, 0.15)
+	utility:Tween(dropdown, {Size = UDim2.new(1, 0, 0, 32 + displayHeight)}, 0.15)
 end
 
 function section:updateButton(button, title)
-	if button then
+	if button and button:FindFirstChild("Title") then
 		button.Text = title
 	end
 end
@@ -780,8 +820,8 @@ function section:updateSlider(slider, title, value, min, max)
 	
 	if value then
 		local percent = (value - (min or 0)) / ((max or 100) - (min or 0))
-		slider.TextBox.Text = tostring(value)
-		slider.Slider.Bar.Fill.Size = UDim2.new(percent, 0, 1, 0)
+		slider.Value.Text = tostring(value)
+		slider.SliderBar.Fill.Size = UDim2.new(percent, 0, 1, 0)
 	end
 end
 
@@ -806,7 +846,7 @@ function library:SelectPage(page, toggle)
 	
 	if toggle then
 		button.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-		button.BackgroundTransparency = 0.3
+		button.BackgroundTransparency = 0.2
 		button.Title.TextTransparency = 0
 		button.Title.Font = Enum.Font.GothamSemibold
 		
@@ -821,13 +861,48 @@ function library:SelectPage(page, toggle)
 		end
 	else
 		button.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-		button.BackgroundTransparency = 0.5
+		button.BackgroundTransparency = 0.2
 		button.Title.TextTransparency = 0.4
 		button.Title.Font = Enum.Font.Gotham
 		
 		if page.contentContainer then
 			page.contentContainer.Visible = false
 		end
+	end
+	
+	self:ResizeContent()
+end
+
+function library:ResizeContent()
+	local totalHeight = 0
+	
+	if self.focusedPage and self.focusedPage.contentContainer then
+		for _, section in pairs(self.focusedPage.contentContainer:GetChildren()) do
+			if section:IsA("Frame") then
+				local sectionHeight = 0
+				local titleLabel = section:FindFirstChild("Container") and section.Container:FindFirstChild("Title")
+				
+				if titleLabel then
+					sectionHeight = titleLabel.AbsoluteSize.Y + 16
+				end
+				
+				local listLayout = section:FindFirstChild("Container") and section.Container:FindFirstChildOfClass("UIListLayout")
+				if listLayout then
+					for _, item in pairs(section.Container:GetChildren()) do
+						if item:IsA("TextButton") or item:IsA("Frame") then
+							sectionHeight = sectionHeight + item.AbsoluteSize.Y + 4
+						end
+					end
+				end
+				
+				section.Size = UDim2.new(1, 0, 0, math.max(sectionHeight, 28))
+				totalHeight = totalHeight + section.AbsoluteSize.Y + 8
+			end
+		end
+	end
+	
+	if self.contentFrame then
+		self.contentFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
 	end
 end
 
