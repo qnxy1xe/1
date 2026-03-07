@@ -79,17 +79,17 @@ function library.new(title)
 	}, {
 		utility:Create("Frame", {
 			Name = "Main",
-			BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-			BackgroundTransparency = 0.1,
-			BorderSizePixel = 1,
-			BorderColor3 = Color3.fromRGB(50, 50, 60),
+		BackgroundColor3 = Color3.fromRGB(20, 20, 28),
+		BackgroundTransparency = 0.2,
+		BorderSizePixel = 1,
+		BorderColor3 = Color3.fromRGB(100, 100, 120),
 			Position = UDim2.new(0.25, 0, 0.05, 0),
 			Size = UDim2.new(0, 545, 0, 428)
 		}, {
 			utility:Create("Frame", {
 				Name = "Pages",
-				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-				BackgroundTransparency = 0.15,
+			BackgroundColor3 = Color3.fromRGB(20, 20, 28),
+			BackgroundTransparency = 0.3,
 				BorderSizePixel = 0,
 				Position = UDim2.new(0, 0, 0, 38),
 				Size = UDim2.new(0, 126, 1, -38),
@@ -114,8 +114,8 @@ function library.new(title)
 			utility:Create("ScrollingFrame", {
 				Name = "ContentFrame",
 				Active = true,
-				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-				BackgroundTransparency = 0.15,
+			BackgroundColor3 = Color3.fromRGB(30, 30, 40),
+			BackgroundTransparency = 0.2,
 				BorderSizePixel = 0,
 				Position = UDim2.new(0, 134, 0, 46),
 				Size = UDim2.new(1, -142, 1, -56),
@@ -131,10 +131,10 @@ function library.new(title)
 			}),
 			utility:Create("Frame", {
 				Name = "TopBar",
-				BackgroundColor3 = Color3.fromRGB(15, 15, 20),
-				BackgroundTransparency = 0.1,
-				BorderSizePixel = 1,
-				BorderColor3 = Color3.fromRGB(50, 50, 60),
+			BackgroundColor3 = Color3.fromRGB(20, 20, 28),
+			BackgroundTransparency = 0.3,
+			BorderSizePixel = 1,
+			BorderColor3 = Color3.fromRGB(100, 100, 120),
 				Size = UDim2.new(1, 0, 0, 38)
 			}, {
 				utility:Create("TextLabel", {
@@ -170,7 +170,7 @@ function library:addPage(title, icon)
 	local button = utility:Create("TextButton", {
 		Name = title,
 		Parent = self.pagesContainer,
-		BackgroundColor3 = Color3.fromRGB(30, 30, 40),
+		BackgroundColor3 = Color3.fromRGB(35, 35, 45),
 		BackgroundTransparency = 0.2,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, -8, 0, 32),
@@ -233,7 +233,7 @@ function page:addSection(title)
 	local container = utility:Create("Frame", {
 		Name = title,
 		Parent = self.contentContainer,
-		BackgroundColor3 = Color3.fromRGB(25, 25, 35),
+		BackgroundColor3 = Color3.fromRGB(35, 35, 45),
 		BackgroundTransparency = 0.2,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 28)
@@ -279,7 +279,7 @@ function section:addButton(title, callback)
 	local button = utility:Create("TextButton", {
 		Name = "Button",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32),
@@ -311,7 +311,7 @@ function section:addToggle(title, default, callback)
 	local toggle = utility:Create("Frame", {
 		Name = "Toggle",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32)
@@ -330,7 +330,7 @@ function section:addToggle(title, default, callback)
 		}),
 		utility:Create("TextButton", {
 			Name = "ToggleButton",
-			BackgroundColor3 = Color3.fromRGB(60, 60, 80),
+			BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.3,
 			BorderSizePixel = 0,
 			Position = UDim2.new(1, -48, 0.5, -9),
@@ -380,7 +380,7 @@ function section:addTextbox(title, default, callback)
 	local textbox = utility:Create("TextButton", {
 		Name = "Textbox",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32),
@@ -405,7 +405,7 @@ function section:addTextbox(title, default, callback)
 		}),
 		utility:Create("TextBox", {
 			Name = "Input",
-			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+		BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
 			Position = UDim2.new(1, -90, 0.5, -8),
@@ -440,7 +440,7 @@ function section:addSlider(title, default, min, max, callback)
 	local slider = utility:Create("TextButton", {
 		Name = "Slider",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 42),
@@ -464,7 +464,7 @@ function section:addSlider(title, default, min, max, callback)
 		}),
 		utility:Create("TextBox", {
 			Name = "Value",
-			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+		BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
 			Position = UDim2.new(1, -50, 0, 4),
@@ -481,7 +481,7 @@ function section:addSlider(title, default, min, max, callback)
 		}),
 		utility:Create("Frame", {
 			Name = "SliderBar",
-			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+		BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
 			Position = UDim2.new(0, 12, 0, 26),
@@ -545,7 +545,7 @@ function section:addKeybind(title, default, callback, changedCallback)
 	local keybind = utility:Create("TextButton", {
 		Name = "Keybind",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32),
@@ -570,7 +570,7 @@ function section:addKeybind(title, default, callback, changedCallback)
 		}),
 		utility:Create("Frame", {
 			Name = "Button",
-			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+			BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.4,
 			BorderSizePixel = 0,
 			Position = UDim2.new(1, -100, 0.5, -8),
@@ -605,7 +605,7 @@ function section:addColorPicker(title, default, callback)
 	local colorpicker = utility:Create("TextButton", {
 		Name = "ColorPicker",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32),
@@ -650,11 +650,11 @@ function section:addDropdown(title, list, callback)
 	local dropdown = utility:Create("Frame", {
 		Name = "Dropdown",
 		Parent = self.container,
-		BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 60),
 		BackgroundTransparency = 0.3,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 32),
-		ClipsDescendants = false
+		ClipsDescendants = true
 	}, {
 		utility:Create("UICorner", {
 			CornerRadius = UDim.new(0, 6)
@@ -672,7 +672,7 @@ function section:addDropdown(title, list, callback)
 		}),
 		utility:Create("Frame", {
 			Name = "List",
-			BackgroundColor3 = Color3.fromRGB(25, 25, 35),
+		BackgroundColor3 = Color3.fromRGB(35, 35, 45),
 			BackgroundTransparency = 0.2,
 			BorderSizePixel = 0,
 			Position = UDim2.new(0, 0, 0, 32),
@@ -743,7 +743,7 @@ function section:updateDropdown(dropdown, title, list, callback)
 	for i, value in ipairs(list) do
 		local item = utility:Create("TextButton", {
 			Parent = scrollFrame,
-			BackgroundColor3 = Color3.fromRGB(50, 50, 70),
+			BackgroundColor3 = Color3.fromRGB(55, 55, 75),
 			BackgroundTransparency = 0.3,
 			BorderSizePixel = 0,
 			Size = UDim2.new(1, 0, 0, itemHeight),
@@ -845,7 +845,7 @@ function library:SelectPage(page, toggle)
 	local button = page.button
 	
 	if toggle then
-		button.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+		button.BackgroundColor3 = Color3.fromRGB(65, 65, 85)
 		button.BackgroundTransparency = 0.2
 		button.Title.TextTransparency = 0
 		button.Title.Font = Enum.Font.GothamSemibold
@@ -860,7 +860,7 @@ function library:SelectPage(page, toggle)
 			page.contentContainer.Visible = true
 		end
 	else
-		button.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+		button.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
 		button.BackgroundTransparency = 0.2
 		button.Title.TextTransparency = 0.4
 		button.Title.Font = Enum.Font.Gotham
