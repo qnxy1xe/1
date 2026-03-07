@@ -16,13 +16,13 @@ local utility = {}
 -- Luna-inspired themes
 local objects = {}
 local themes = {
-	Background = Color3.fromRGB(20, 20, 30),
-	Glow = Color3.fromRGB(0, 0, 0),
-	Accent = Color3.fromRGB(30, 30, 45),
-	LightContrast = Color3.fromRGB(50, 60, 100),
-	DarkContrast = Color3.fromRGB(25, 25, 40),
-	TextColor = Color3.fromRGB(255, 255, 255),
-	Glass = Color3.fromRGB(255, 255, 255)
+	Background = Color3.fromRGB(20, 20, 28),
+	Glow = Color3.fromRGB(100, 100, 120),
+	Accent = Color3.fromRGB(30, 30, 40),
+	LightContrast = Color3.fromRGB(45, 45, 60),
+	DarkContrast = Color3.fromRGB(35, 35, 45),
+	TextColor = Color3.fromRGB(200, 200, 210),
+	Glass = Color3.fromRGB(200, 200, 210)
 }
 
 do
@@ -220,7 +220,7 @@ do
 				Position = UDim2.new(0.25, 0, 0.052435593, 0),
 				Size = UDim2.new(0, 545, 0, 428),
 				Image = "rbxassetid://4641149554",
-				ImageColor3 = Color3.fromRGB(30, 30, 45),
+				ImageColor3 = Color3.fromRGB(20, 20, 28),
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(4, 4, 296, 296)
 			}, {
@@ -231,7 +231,7 @@ do
 					Size = UDim2.new(1, 30, 1, 30),
 					ZIndex = 0,
 					Image = "rbxassetid://5028857084",
-					ImageColor3 = Color3.fromRGB(100, 150, 255),
+					ImageColor3 = Color3.fromRGB(100, 100, 120),
 					ScaleType = Enum.ScaleType.Slice,
 					SliceCenter = Rect.new(24, 24, 276, 276)
 				}),
@@ -243,7 +243,7 @@ do
 					Size = UDim2.new(0, 126, 1, -38),
 					ZIndex = 3,
 					Image = "rbxassetid://5012534273",
-					ImageColor3 = Color3.fromRGB(30, 30, 45),
+					ImageColor3 = Color3.fromRGB(20, 20, 28),
 					ScaleType = Enum.ScaleType.Slice,
 					SliceCenter = Rect.new(4, 4, 296, 296)
 				}, {
@@ -269,7 +269,7 @@ do
 					Size = UDim2.new(1, 0, 0, 38),
 					ZIndex = 5,
 					Image = "rbxassetid://4595286933",
-					ImageColor3 = Color3.fromRGB(30, 30, 45),
+					ImageColor3 = Color3.fromRGB(20, 20, 28),
 					ScaleType = Enum.ScaleType.Slice,
 					SliceCenter = Rect.new(4, 4, 296, 296)
 				}, {
@@ -376,7 +376,7 @@ do
 			Size = UDim2.new(1, -10, 0, 28),
 			ZIndex = 2,
 			Image = "rbxassetid://5028857472",
-			ImageColor3 = Color3.fromRGB(20, 20, 30),
+			ImageColor3 = Color3.fromRGB(30, 30, 40),
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(4, 4, 296, 296),
 			ClipsDescendants = true
@@ -719,65 +719,61 @@ do
 	end
 	
 	function section:addToggle(title, default, callback)
-		local toggle = utility:Create("ImageButton", {
+		local toggle = utility:Create("Frame", {
 			Name = "Toggle",
 			Parent = self.container,
-			BackgroundTransparency = 1,
+			BackgroundColor3 = Color3.fromRGB(40, 40, 55),
+			BackgroundTransparency = 0.3,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 37),
-			ZIndex = 2,
-			Image = "rbxassetid://5028857472",
-			ImageColor3 = Color3.fromRGB(25, 25, 40),
-			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(2, 2, 298, 298),
-			AutoButtonColor = false
-		},{
+			Size = UDim2.new(1, 0, 0, 32)
+		}, {
 			utility:Create("TextLabel", {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 10, 0.5, 1),
-				Size = UDim2.new(0.5, 0, 1, 0),
-				ZIndex = 3,
+				Position = UDim2.new(0, 12, 0.5, 0),
+				Size = UDim2.new(0, 150, 1, 0),
 				Font = Enum.Font.Gotham,
 				Text = title,
-				TextColor3 = themes.TextColor,
-				TextSize = 12,
-				TextTransparency = 0.10000000149012,
+				TextColor3 = Color3.fromRGB(200, 200, 210),
+				TextSize = 11,
 				TextXAlignment = Enum.TextXAlignment.Left
 			}),
-			utility:Create("ImageLabel", {
-				Name = "Button",
-				BackgroundTransparency = 1,
+			utility:Create("TextButton", {
+				Name = "ToggleButton",
+				BackgroundColor3 = Color3.fromRGB(60, 60, 80),
+				BackgroundTransparency = 0.3,
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -50, 0.5, -8),
-				Size = UDim2.new(0, 40, 0, 16),
-				ZIndex = 2,
-				Image = "rbxassetid://5028857472",
-				ImageColor3 = Color3.fromRGB(50, 60, 100),
-				ScaleType = Enum.ScaleType.Slice,
-				SliceCenter = Rect.new(2, 2, 298, 298)
+				Position = UDim2.new(1, -48, 0.5, -9),
+				Size = UDim2.new(0, 40, 0, 18),
+				AutoButtonColor = false,
+				Font = Enum.Font.Gotham,
+				Text = ""
 			}, {
-				utility:Create("ImageLabel", {
-					Name = "Frame",
-					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 2, 0.5, -6),
-					Size = UDim2.new(1, -22, 1, -4),
-					ZIndex = 2,
-					Image = "rbxassetid://5028857472",
-					ImageColor3 = themes.TextColor,
-					ScaleType = Enum.ScaleType.Slice,
-					SliceCenter = Rect.new(2, 2, 298, 298)
+				utility:Create("UICorner", {
+					CornerRadius = UDim.new(0, 9)
+				}),
+				utility:Create("Frame", {
+					Name = "Dot",
+					BackgroundColor3 = Color3.fromRGB(200, 200, 210),
+					BorderSizePixel = 0,
+					Position = UDim2.new(0, 2, 0.5, -8),
+					Size = UDim2.new(0, 16, 0, 16)
+				}, {
+					utility:Create("UICorner", {
+						CornerRadius = UDim.new(0, 8)
+					})
 				})
 			})
 		})
 		
 		table.insert(self.modules, toggle)
 		
-		local active = default
+		local active = default or false
 		self:updateToggle(toggle, nil, active)
 		
-		toggle.MouseButton1Click:Connect(function()
+		local toggleBtn = toggle.ToggleButton
+		toggleBtn.MouseButton1Click:Connect(function()
 			active = not active
 			self:updateToggle(toggle, nil, active)
 			
@@ -1683,7 +1679,7 @@ do
 			Parent = self.container,
 			BackgroundTransparency = 1,
 			Size = UDim2.new(1, 0, 0, 45),
-			ClipsDescendants = true
+			ClipsDescendants = true,
 		}, {
 			utility:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
@@ -1696,7 +1692,7 @@ do
 				Size = UDim2.new(1, 0, 0, 37),
 				ZIndex = 2,
 				Image = "rbxassetid://5028857472",
-				ImageColor3 = Color3.fromRGB(25, 25, 40),
+				ImageColor3 = Color3.fromRGB(45, 45, 60),
 				ScaleType = Enum.ScaleType.Slice,
 				SliceCenter = Rect.new(2, 2, 298, 298)
 			}, {
